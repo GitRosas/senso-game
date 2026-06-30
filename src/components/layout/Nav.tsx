@@ -24,17 +24,19 @@ export function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const links: Array<{ href: string; label: string }> = [
+  // `prefix` keeps a link highlighted across its sub-pages (e.g. any /leaderboard/*).
+  type NavLink = { href: string; label: string; prefix?: string };
+  const links: NavLink[] = [
     { href: '/', label: t('games') },
-    { href: '/leaderboard', label: t('leaderboard') },
+    { href: '/leaderboard/tempo', label: t('leaderboard'), prefix: '/leaderboard' },
     { href: '/pricing', label: t('pricing') },
   ];
   if (FEATURES.supabase) {
     links.push({ href: '/account', label: t('account') });
   }
 
-  const isActive = (href: string) =>
-    href === '/' ? pathname === '/' : pathname.startsWith(href);
+  const isActive = (l: NavLink) =>
+    l.href === '/' ? pathname === '/' : pathname.startsWith(l.prefix ?? l.href);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-bg/70 backdrop-blur-xl">
@@ -50,7 +52,7 @@ export function Nav() {
               href={l.href}
               className={cn(
                 'rounded-full px-3.5 py-2 text-sm font-medium transition',
-                isActive(l.href)
+                isActive(l)
                   ? 'bg-accent/10 text-fg ring-1 ring-inset ring-accent/30'
                   : 'text-muted hover:bg-surface-2 hover:text-fg',
               )}
@@ -86,7 +88,7 @@ export function Nav() {
                 onClick={() => setOpen(false)}
                 className={cn(
                   'rounded-lg px-3 py-3 text-sm font-medium transition',
-                  isActive(l.href) ? 'bg-accent/10 text-fg' : 'text-fg hover:bg-surface-2',
+                  isActive(l) ? 'bg-accent/10 text-fg' : 'text-fg hover:bg-surface-2',
                 )}
               >
                 {l.label}

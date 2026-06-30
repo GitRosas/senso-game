@@ -203,7 +203,6 @@
   "Leaderboard": {
     "title": "{game} leaderboard",
     "hubTitle": "Leaderboards",
-    "hubSubtitle": "Pick a game to see its rankings.",
     "daily": "Daily",
     "allTime": "All-time",
     "easy": "Easy",
