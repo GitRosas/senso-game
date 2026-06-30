@@ -14,7 +14,7 @@ export function getConsent(): ConsentChoice | null {
 export function setConsent(choice: ConsentChoice): void {
   if (typeof window === 'undefined') return;
   window.localStorage.setItem(KEY, choice);
-  // Mirror to a cookie so the server could read it if needed.
+  // Also mirror to a cookie so server code can read it.
   document.cookie = `${KEY}=${choice}; path=/; max-age=${60 * 60 * 24 * 180}; SameSite=Lax`;
   window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: choice }));
 }

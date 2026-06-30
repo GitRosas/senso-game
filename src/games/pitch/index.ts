@@ -1,8 +1,4 @@
-/**
- * Pitch — reproduce a tone's frequency from memory.
- * Distance is measured on the ERB-rate scale (equivalent rectangular bandwidth),
- * which models how the cochlea spaces frequencies far better than raw Hz.
- */
+// Pitch - error is |ERB-rate(guess) - ERB-rate(target)|
 import type { Game } from '../engine/types';
 import { logUniform, round2 } from '../engine/math';
 

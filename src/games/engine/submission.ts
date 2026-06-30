@@ -1,11 +1,5 @@
-/**
- * Authoritative score recomputation — the heart of anti-cheat.
- *
- * Given only (gameId, mode, seed, guesses), this regenerates the exact targets
- * and recomputes every round score server-side. The client-sent total is never
- * trusted. The same function runs in the Supabase Edge Function and in unit
- * tests, guaranteeing client and server always agree for a fixed input.
- */
+// server-side score recomputation - regenerates targets from (gameId, mode, seed, guesses),
+// never trusts the client total. runs in both the edge function and unit tests.
 import type { Mode } from './types';
 import { GAMES, isGameId } from './registry';
 import { rngFromSeed } from './rng';

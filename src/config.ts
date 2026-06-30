@@ -1,9 +1,8 @@
-/**
- * Central branding & feature configuration — the single source to re-skin Senso.
- * All runtime secrets come from environment variables (see `.env.example`);
- * this file only holds public, non-secret product configuration.
- */
+// Branding + feature flags. Secrets always come from env (see .env.example);
+// this file only holds public, non-secret config.
 import type { GameId } from '@/games/engine/types';
+
+export type Locale = 'en' | 'pt';
 
 export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME ?? 'Senso';
 
@@ -12,34 +11,26 @@ export const SITE_TAGLINE = {
   pt: 'Os teus sentidos lembram-se de menos do que pensas.',
 } as const;
 
-/** Canonical site URL (no trailing slash). */
+// Canonical site URL, no trailing slash.
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(
   /\/$/,
   '',
 );
 
-export const DEFAULT_LOCALE = (process.env.NEXT_PUBLIC_DEFAULT_LOCALE ?? 'en') as 'en' | 'pt';
-
-export const LOCALES = ['en', 'pt'] as const;
-export type Locale = (typeof LOCALES)[number];
-
 export const SOCIAL = {
   kofiHandle: process.env.NEXT_PUBLIC_KOFI_HANDLE ?? '',
-  twitter: '@sensogame',
-  github: 'https://github.com/senso-game/senso',
 } as const;
 
-/** Per-game accent colors (used on cards, result screens, OG images). */
+// One accent per game (cards, result screens, OG images).
 export const GAME_ACCENTS: Record<GameId, string> = {
-  tempo: '#f59e0b', // amber
-  hue: '#ec4899', // pink
-  pitch: '#8b5cf6', // violet
-  count: '#10b981', // emerald
-  angle: '#3b82f6', // blue
-  spot: '#06b6d4', // cyan
+  tempo: '#f59e0b',
+  hue: '#ec4899',
+  pitch: '#8b5cf6',
+  count: '#10b981',
+  angle: '#3b82f6',
+  spot: '#06b6d4',
 };
 
-/** Emoji glyph per game (used in share copy, cards, lightweight icons). */
 export const GAME_GLYPHS: Record<GameId, string> = {
   tempo: '⏱️',
   hue: '🎨',
@@ -49,7 +40,7 @@ export const GAME_GLYPHS: Record<GameId, string> = {
   spot: '📍',
 };
 
-/** Feature availability derived from env (server + client safe for NEXT_PUBLIC_*). */
+// What's available, derived from env. Everything degrades gracefully when off.
 export const FEATURES = {
   get supabase(): boolean {
     return Boolean(

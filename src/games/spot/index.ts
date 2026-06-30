@@ -1,13 +1,4 @@
-/**
- * Spot — reproduce a position from memory (visuospatial localization).
- * A dot flashes somewhere in a square field, then vanishes; the player marks
- * where they think it was. Error is the Euclidean distance between target and
- * guess, in units of the field's width (0 = perfect, ~1.3 = opposite corner).
- *
- * This is an original sixth dimension for Senso: not "what" (colour, pitch) or
- * "how much" (count, duration), but "where" — handled by the brain's dorsal
- * ("where") stream and spatial working memory.
- */
+// Spot - error is Euclidean distance in field-width units (0 = perfect, ~1.3 = opposite corner)
 import type { Game } from '../engine/types';
 import { uniform } from '../engine/math';
 

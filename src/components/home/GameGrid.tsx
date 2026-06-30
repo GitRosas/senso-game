@@ -76,7 +76,7 @@ export function GameGrid() {
   );
 }
 
-/** Convert #rrggbb to "r g b" for CSS variable assignment. */
+// "#rrggbb" -> "r g b" for CSS custom property use.
 function hexToRgb(hex: string): string {
   const m = hex.replace('#', '');
   const r = parseInt(m.slice(0, 2), 16);

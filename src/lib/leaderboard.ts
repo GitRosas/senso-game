@@ -36,7 +36,7 @@ export interface LeaderboardRow {
   isYou: boolean;
 }
 
-/** Submit a result: recompute locally, persist locally, and publish globally if possible. */
+// Score is recomputed here as an anti-cheat check before saving or publishing.
 export async function submitResult(args: SubmitArgs): Promise<SubmitResult> {
   const local = recomputeScore({
     gameId: args.gameId,
@@ -106,7 +106,7 @@ export async function submitResult(args: SubmitArgs): Promise<SubmitResult> {
   return { total: local.total, rounds: local.rounds, rank, source: 'local' };
 }
 
-/** Fetch a leaderboard (global if configured, else this device's local board). */
+// Falls back to the local board when Supabase isn't configured.
 export async function fetchLeaderboard(
   gameId: GameId,
   mode: Mode,
@@ -128,7 +128,7 @@ export async function fetchLeaderboard(
     const { data, error } = await q.order('total', { ascending: false }).limit(300);
     if (error) throw new Error(error.message);
 
-    // Keep each player's best score only.
+    // Deduplicate to one row per player (best score wins).
     const bestByPlayer = new Map<string, { display: string; total: number; at: number; you: boolean }>();
     for (const row of data ?? []) {
       const pid = String(row.player_id ?? '');
@@ -166,10 +166,7 @@ export async function fetchLeaderboard(
   return { rows, source: 'local' };
 }
 
-/**
- * Tournament leaderboard: everyone who plays a room shares one seed, so the
- * private board is simply all scores for that game/mode/seed.
- */
+// Tournament rooms share a seed, so this just filters by game/mode/seed.
 export async function fetchTournamentLeaderboard(
   gameId: GameId,
   mode: Mode,

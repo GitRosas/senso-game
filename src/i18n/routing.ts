@@ -9,4 +9,4 @@ export const routing = defineRouting({
 
 export type AppLocale = (typeof routing.locales)[number];
 
-export const { Link, redirect, usePathname, useRouter, getPathname } = createNavigation(routing);
+export const { Link, usePathname, useRouter } = createNavigation(routing);

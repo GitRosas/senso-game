@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 
-/** Server-side Stripe client, or null when no secret key is configured. */
+// Returns null when STRIPE_SECRET_KEY isn't set.
 export function getStripe(): Stripe | null {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) return null;

@@ -45,21 +45,13 @@ export function getBest(gameId: GameId, mode: Mode): number | null {
   return Math.max(...scores.map((s) => s.total));
 }
 
-export function getDailyBest(gameId: GameId, mode: Mode, date: string): number | null {
-  const scores = readAll().filter(
-    (s) => s.gameId === gameId && s.mode === mode && s.isDaily && s.dailyDate === date,
-  );
-  if (scores.length === 0) return null;
-  return Math.max(...scores.map((s) => s.total));
-}
-
 export function hasDailyAttempt(gameId: GameId, mode: Mode, date: string): boolean {
   return readAll().some(
     (s) => s.gameId === gameId && s.mode === mode && s.isDaily && s.dailyDate === date,
   );
 }
 
-/** Offline leaderboard: best score per (game, mode), optionally daily-only. */
+// Returns top 100 scores for a game/mode, optionally filtered to daily runs.
 export function getLocalLeaderboard(
   gameId: GameId,
   mode: Mode,
@@ -72,7 +64,7 @@ export function getLocalLeaderboard(
   return scores.sort((a, b) => b.total - a.total).slice(0, 100);
 }
 
-/** Per-game training history (chronological), for the account page. */
+// Chronological history for the account page, optionally filtered by game.
 export function getHistory(gameId?: GameId): LocalScore[] {
   const scores = readAll();
   return (gameId ? scores.filter((s) => s.gameId === gameId) : scores).sort(

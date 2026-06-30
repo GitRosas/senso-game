@@ -1,15 +1,9 @@
-/**
- * Count — estimate how many dots flashed (the Approximate Number Sense).
- * Error follows Weber's law (|log2(guess/n)|). Dot size is deliberately varied
- * so that total inked area is NOT a reliable proxy for number: trials alternate
- * between constant-total-area and constant-dot-size layouts.
- */
+// Count - error is |log2(guess/n)|; area/size control prevents using density as a shortcut
 import type { Game } from '../engine/types';
 import { randInt } from '../engine/math';
 
 export type CountControl = 'area' | 'size';
 
-/** A dot in normalized coordinates: x,y,r are fractions of the square play area. */
 export interface Dot {
   x: number;
   y: number;
@@ -37,11 +31,10 @@ function dotRadius(n: number, control: CountControl): number {
   return Math.sqrt(TOTAL_AREA_FRAC / (REF_N * Math.PI));
 }
 
-/** Deterministically scatter `n` dots with a soft min-distance constraint. */
 function placeDots(rng: () => number, n: number, baseR: number): Dot[] {
   const dots: Dot[] = [];
   for (let i = 0; i < n; i++) {
-    // Per-dot size jitter keeps individual area from leaking the count.
+    // jitter per dot so per-dot area doesn't leak the count
     let r = baseR * (0.85 + rng() * 0.3);
     let placed = false;
     for (let attempt = 0; attempt < 40 && !placed; attempt++) {
@@ -56,7 +49,7 @@ function placeDots(rng: () => number, n: number, baseR: number): Dot[] {
         dots.push({ x, y, r });
         placed = true;
       } else if (attempt === 39) {
-        // Give up gracefully: shrink and place anyway so we always emit n dots.
+        // give up on placement - shrink and place anyway to always emit n dots
         r *= 0.8;
         dots.push({
           x: MARGIN + r + rng() * (1 - 2 * (MARGIN + r)),

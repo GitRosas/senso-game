@@ -1,6 +1,6 @@
 'use client';
 
-/** Lazily-created shared AudioContext (unlocked on a user gesture). */
+// Shared AudioContext, created lazily on the first user gesture.
 let ctx: AudioContext | null = null;
 
 type WebkitWindow = Window & { webkitAudioContext?: typeof AudioContext };
@@ -21,11 +21,8 @@ export interface ToneHandle {
   stop: () => void;
 }
 
-/**
- * Play a sine tone with a 15ms attack/release to avoid clicks. If `durationMs`
- * is provided the tone auto-stops and fires `onEnded`; otherwise it sustains
- * until `stop()` is called (used for the live drag in Pitch).
- */
+// 15ms attack/release to avoid clicks. Without durationMs the tone sustains
+// until stop() is called - used for the live drag in Pitch.
 export function playTone(
   freq: number,
   options: { durationMs?: number; onEnded?: () => void; gain?: number } = {},

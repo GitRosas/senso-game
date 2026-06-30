@@ -1,13 +1,6 @@
-/**
- * Monte-Carlo calibration harness.
- *
- * Simulates many 5-round games for each game using a per-game error model
- * (errors drawn in each game's native perceptual unit), then reports the score
- * distribution that the current `halfScoreError` constants produce. Use it to
- * re-tune those constants so novices land ~29/50 and experts ~38–40/50.
- *
- * Run:  pnpm calibrate
- */
+// Monte-Carlo calibration. Simulates games using per-game error models and reports
+// score distributions for the current halfScoreError constants. Tune so novices
+// land ~29/50 and experts ~38-40/50. Run: pnpm calibrate
 import { mulberry32 } from '../src/games/engine/rng';
 import { scoreRound } from '../src/games/engine/scoring';
 import { GAMES, GAME_ORDER } from '../src/games/engine/registry';
@@ -15,9 +8,8 @@ import type { GameId } from '../src/games/engine/types';
 
 const TRIALS = 20000;
 
-// Plausible per-round error standard deviation (in each game's error unit) for a
-// "novice" and an "expert". Illustrative starting points — replace with empirical
-// data as it arrives, then adjust each module's halfScoreError.
+// Per-round error sigma for novice/expert (each game's native unit).
+// Replace with empirical data as it arrives, then adjust halfScoreError.
 const SIGMA: Record<GameId, { novice: number; expert: number }> = {
   tempo: { novice: 0.17, expert: 0.09 },
   hue: { novice: 13, expert: 6 },

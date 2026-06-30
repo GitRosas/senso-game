@@ -63,12 +63,12 @@ function PitchInput({ onSubmit }: InputProps) {
     setFrac(1 - rel);
   }, []);
 
-  // Keep the sustained tone's frequency in sync with the slider.
+  // Sync the sustained tone's frequency as the slider moves.
   useEffect(() => {
     if (toneRef.current) toneRef.current.setFrequency(freqFromFraction(frac));
   }, [frac]);
 
-  // Stop the tone if the player leaves the round.
+  // Stop the tone on unmount.
   useEffect(() => () => toneRef.current?.stop(), []);
 
   const startTone = () => {
@@ -88,13 +88,13 @@ function PitchInput({ onSubmit }: InputProps) {
     if (!dragging) return;
     updateFromClientY(clientY);
   };
-  // Release keeps the tone playing — it only stops on Lock in (or leaving).
+  // Pointer-up doesn't stop the tone; it stops on Lock In or unmount.
   const end = () => setDragging(false);
 
   const nudge = (deltaErb: number) => {
     startTone();
     const newErb = erbRate(freq) + deltaErb;
-    // invert erbRate: f = ((10^(erb/21.4)) - 1) / 0.00437
+    // Inverse of erbRate: f = ((10^(erb/21.4)) - 1) / 0.00437
     const f = (Math.pow(10, newErb / 21.4) - 1) / 0.00437;
     setFrac(fractionFromFreq(clamp(f, FMIN, FMAX)));
   };

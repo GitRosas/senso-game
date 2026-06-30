@@ -10,7 +10,6 @@ import { Nav } from '@/components/layout/Nav';
 import { Footer } from '@/components/layout/Footer';
 import { ConsentBanner } from '@/components/ConsentBanner';
 import { SupportButton } from '@/components/SupportButton';
-import { Analytics } from '@/components/Analytics';
 import '../globals.css';
 
 export function generateStaticParams() {
@@ -94,7 +93,6 @@ export default async function LocaleLayout({
             </div>
             <SupportButton />
             <ConsentBanner />
-            <Analytics />
           </ToastProvider>
         </NextIntlClientProvider>
       </body>

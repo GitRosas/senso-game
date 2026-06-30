@@ -7,7 +7,7 @@ export interface CurrentUser {
   stripeCustomerId: string | null;
 }
 
-/** Resolve the signed-in user and their premium status (server-only). */
+// Server-only - reads auth session and the profiles table.
 export async function getCurrentUser(): Promise<CurrentUser | null> {
   const sb = getSupabaseServer();
   if (!sb) return null;
@@ -28,7 +28,7 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
   };
 }
 
-/** Convenience boolean used to gate ads/features on the server. */
+// Quick helper for gating ads/features server-side.
 export async function getIsPremium(): Promise<boolean> {
   const user = await getCurrentUser();
   return user?.isPremium ?? false;

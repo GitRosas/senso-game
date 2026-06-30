@@ -1,12 +1,5 @@
-/**
- * CIEDE2000 color-difference (ΔE00), implemented exactly per Sharma, Wu & Dalal
- * (2005) "The CIEDE2000 Color-Difference Formula".
- *
- * We hand-roll this (rather than use culori's `differenceCiede2000`) because
- * culori's result deviates from the published reference set by up to ~0.19 ΔE,
- * and §16 requires matching the reference pairs. culori is still used for all
- * color-space *conversions* (OKLCh/HSV → Lab); only the final metric is ours.
- */
+// CIEDE2000 delta-E, Sharma et al. 2005. hand-rolled because culori deviates
+// from the reference pairs by up to ~0.19 dE; culori still handles color-space conversions.
 
 export interface Lab {
   l: number;

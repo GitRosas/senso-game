@@ -1,8 +1,4 @@
-/**
- * The single source of truth for which games exist and in what order. Home hub,
- * leaderboards, sitemap and anti-cheat all iterate this — adding a 6th game means
- * implementing the Game interface and adding one line here (plus a content file).
- */
+// master game list - add a new game here and in GAME_ORDER, then add a content file.
 import type { ErasedGame, GameId } from './types';
 import { eraseGame } from './types';
 import { tempo } from '../tempo';

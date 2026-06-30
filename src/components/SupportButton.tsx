@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import { SOCIAL, FEATURES } from '@/config';
 
-/** Floating Ko-fi support button (bottom-left, clear of bottom-centre toasts). */
+// Floating Ko-fi button, bottom-left so it doesn't clash with the toast stack.
 export async function SupportButton() {
   if (!FEATURES.kofi) return null;
   const t = await getTranslations('Nav');

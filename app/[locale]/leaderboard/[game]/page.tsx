@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/routing';
 import { GAME_ORDER, isGameId } from '@/games/engine/registry';
-import { GAME_ACCENTS, GAME_GLYPHS, SITE_URL, type Locale } from '@/config';
+import { GAME_ACCENTS, GAME_GLYPHS } from '@/config';
 import { Leaderboard } from '@/components/Leaderboard';
 import { AdSlot } from '@/components/AdSlot';
 import { hexToRgbChannels } from '@/lib/utils';

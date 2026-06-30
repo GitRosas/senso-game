@@ -7,11 +7,7 @@ import { hasAdConsent, CONSENT_EVENT } from '@/lib/consent';
 import { usePremium } from '@/hooks/usePremium';
 import { cn } from '@/lib/utils';
 
-/**
- * AdSense slot. Renders ONLY on content/result/leaderboard surfaces and only
- * when: AdSense is configured, the user consented, and they aren't premium.
- * Never used on the play screen.
- */
+// Not shown on the play screen; requires consent + non-premium + AdSense config.
 export function AdSlot({ className }: { className?: string }) {
   const { isPremium, loading } = usePremium();
   const [consent, setConsent] = useState(false);

@@ -129,7 +129,7 @@ export function ShareCard({
         return;
       }
     } catch {
-      // user cancelled or share failed — fall through to copy
+      // user cancelled or share failed - fall through to clipboard copy
     }
     await navigator.clipboard?.writeText(`${shareText} ${shareUrl}`);
     toast(t('shareFailed'), 'default');

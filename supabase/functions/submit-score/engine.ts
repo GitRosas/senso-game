@@ -1,16 +1,12 @@
-// Deno-compatible port of src/games/engine + the games, used by the anti-cheat
-// Edge Function. It mirrors the browser engine exactly (same RNG, same scoring
-// curve, same per-game math) and is covered by the identical algorithms in the
-// project's Vitest suite. We vendor a copy because Next's bundler (extensionless
-// TS imports, bare specifiers) and Deno's resolver are not directly
-// interoperable. Keep in sync with src/games/**. Single difficulty ('easy').
+// Deno copy of src/games/engine - kept in sync manually (Next and Deno resolvers
+// are not interoperable). Single difficulty ('easy').
 
 import { clampChroma, converter } from 'npm:culori@4';
 
 export type GameId = 'tempo' | 'hue' | 'pitch' | 'count' | 'angle' | 'spot';
 export type Mode = 'easy';
 
-// ---- RNG -------------------------------------------------------------------
+// RNG
 function cyrb128(str: string): [number, number, number, number] {
   let h1 = 1779033703,
     h2 = 3144134277,
@@ -50,7 +46,7 @@ function roundSeedString(seed: string, gameId: GameId, mode: Mode, r: number): s
   return `${seed}:${gameId}:${mode}:${r}`;
 }
 
-// ---- math ------------------------------------------------------------------
+// math helpers
 const uniform = (rng: () => number, min: number, max: number) => min + rng() * (max - min);
 const logUniform = (rng: () => number, min: number, max: number) =>
   Math.exp(Math.log(min) + rng() * (Math.log(max) - Math.log(min)));
@@ -59,7 +55,7 @@ const randInt = (rng: () => number, min: number, max: number) =>
 const round2 = (v: number) => Math.round(v * 100) / 100;
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 
-// ---- scoring ---------------------------------------------------------------
+// scoring
 function scoreRound(error: number, half: number): number {
   if (!Number.isFinite(error) || !Number.isFinite(half) || half <= 0) return 0;
   return Math.round(10 * Math.pow(0.5, Math.max(0, error) / half) * 100) / 100;
@@ -68,7 +64,7 @@ function totalScore(scores: number[]): number {
   return Math.round(scores.reduce((a, s) => a + s, 0) * 100) / 100;
 }
 
-// ---- CIEDE2000 -------------------------------------------------------------
+// CIEDE2000 color difference
 const RAD = Math.PI / 180;
 function atan2Deg(y: number, x: number): number {
   let d = Math.atan2(y, x) / RAD;
@@ -133,7 +129,7 @@ function circularDistanceDeg(a: number, b: number): number {
   return Math.min(d, 360 - d);
 }
 
-// ---- per-game logic --------------------------------------------------------
+// per-game logic
 interface GameLogic {
   rounds: number;
   generateTarget(rng: () => number): unknown;

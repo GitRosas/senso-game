@@ -1,7 +1,6 @@
-// Anti-cheat score submission. Recomputes the score server-side from the seed
-// and guesses (never trusting any client-sent total), enforces one daily attempt
-// per player, and inserts using the service role (bypassing RLS — direct client
-// inserts are forbidden by policy).
+// Score submission edge function. Recomputes the score server-side from seed +
+// guesses (ignores any client-sent total), enforces one daily attempt per player,
+// and inserts via the service role since direct client inserts are blocked by RLS.
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { recomputeScore } from './engine.ts';
 
@@ -52,7 +51,7 @@ Deno.serve(async (req: Request) => {
 
   const country = req.headers.get('cf-ipcountry') ?? req.headers.get('x-country');
 
-  // Enforce one counted daily attempt per player/game/mode/day.
+  // one counted attempt per player/game/mode/day
   if (isDaily && dailyDate) {
     const { data: existing } = await supabase
       .from('scores')

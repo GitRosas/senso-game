@@ -3,7 +3,7 @@
 const ID_KEY = 'senso-player-id';
 const NAME_KEY = 'senso-display-name';
 
-/** A stable, anonymous device id (created lazily). */
+// Stable anonymous device id, persisted in localStorage.
 export function getPlayerId(): string {
   if (typeof window === 'undefined') return 'server';
   let id = window.localStorage.getItem(ID_KEY);

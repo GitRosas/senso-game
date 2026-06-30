@@ -1,13 +1,4 @@
-/**
- * Seed derivation for the three play modes.
- *
- *  - practice : a fresh random base62 token each game
- *  - daily    : `daily:${gameId}:${mode}:${YYYY-MM-DD-UTC}` — identical worldwide
- *  - challenge: a random 64-bit seed, base62-encoded into a shareable link token
- *
- * Per-round target generation is a pure function of the seed string built by
- * `roundSeedString`, so the same link always replays the same target set.
- */
+// seed derivation for practice (random), daily (date-keyed), and challenge (shareable token) modes.
 import type { GameId, Mode } from './types';
 
 const BASE62 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -36,20 +27,19 @@ export function decodeBase62(str: string): bigint {
   return n;
 }
 
-/** True when a token is a syntactically valid base62 string of sane length. */
+/** syntactically valid base62, sane length */
 export function isValidSeedToken(token: string): boolean {
   return /^[0-9A-Za-z]{1,16}$/.test(token);
 }
 
-/** A fresh random 64-bit seed encoded as base62 (for challenge & practice). */
+/** random 64-bit seed as base62, for challenge & practice */
 export function randomSeed(): string {
   const bytes = new Uint8Array(8);
   const cryptoObj = globalThis.crypto;
   if (cryptoObj && typeof cryptoObj.getRandomValues === 'function') {
     cryptoObj.getRandomValues(bytes);
   } else {
-    // Non-deterministic fallback; only used for *creating* new seeds, never for
-    // reproducing targets, so weak randomness here is acceptable.
+    // fallback - only for creating new seeds, never for reproducing targets
     for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
   }
   let v = 0n;
@@ -57,7 +47,7 @@ export function randomSeed(): string {
   return encodeBase62(v);
 }
 
-/** Format a date as YYYY-MM-DD in UTC. Pure given the input. */
+/** YYYY-MM-DD in UTC */
 export function formatDateUTC(date: Date): string {
   const y = date.getUTCFullYear().toString().padStart(4, '0');
   const m = (date.getUTCMonth() + 1).toString().padStart(2, '0');
@@ -65,17 +55,17 @@ export function formatDateUTC(date: Date): string {
   return `${y}-${m}-${d}`;
 }
 
-/** Today's UTC date string. */
+/** today as YYYY-MM-DD UTC */
 export function todayUTC(): string {
   return formatDateUTC(new Date());
 }
 
-/** The canonical seed for a given day's daily challenge. */
+/** canonical daily seed string */
 export function dailySeed(gameId: GameId, mode: Mode, dateUTC: string): string {
   return `daily:${gameId}:${mode}:${dateUTC}`;
 }
 
-/** The per-round RNG seed string consumed by `rngFromSeed`. */
+/** per-round seed string for rngFromSeed */
 export function roundSeedString(
   seed: string,
   gameId: GameId,

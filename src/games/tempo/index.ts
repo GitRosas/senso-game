@@ -1,8 +1,4 @@
-/**
- * Tempo — reproduce a duration from memory.
- * A pad lights for `target` seconds; the player press-and-holds for the same time.
- * Error is the absolute log2 ratio of guessed to target duration (Weber-style).
- */
+// Tempo - error is |log2(guess/target)| (Weber-style ratio)
 import type { Game } from '../engine/types';
 import { logUniform, round2 } from '../engine/math';
 
@@ -31,8 +27,8 @@ export const tempo: Game<TempoTarget, TempoGuess> = {
     return 0.16;
   },
 
-  // The stimulus length equals the target duration itself, so the player UI owns
-  // timing; this advisory value is the average of the range (used only in copy).
+  // The stimulus IS the target duration, so the UI owns timing; this is just the
+  // range midpoint, used in copy.
   studyMs() {
     return Math.round(((RANGE[0] + RANGE[1]) / 2) * 1000);
   },

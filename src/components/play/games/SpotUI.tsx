@@ -23,7 +23,7 @@ function Field({
       style={cursorNone ? { cursor: 'none' } : undefined}
       className={`relative aspect-square ${className} touch-none overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-surface-2 to-surface`}
     >
-      {/* faint grid for spatial reference */}
+      {/* faint grid lines for spatial reference */}
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.12]"
@@ -130,7 +130,7 @@ function SpotInput({ onSubmit }: InputProps) {
           }
         }}
       >
-        {/* Click or tap to drop your marker, then drag to fine-tune. */}
+        {/* tap to place, drag to adjust */}
         <Field>
           {placed ? (
             <Marker x={pos.x} y={pos.y} variant="guess" />

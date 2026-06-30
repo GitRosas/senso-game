@@ -1,11 +1,4 @@
-/**
- * Deterministic, dependency-free PRNG.
- *
- * `cyrb128` hashes a string into four 32-bit seeds; `mulberry32` is a fast,
- * well-distributed generator returning floats in [0, 1). Identical seed strings
- * always produce identical streams across browsers, Node and Deno — this is what
- * makes daily and challenge modes fair worldwide.
- */
+// cyrb128 -> mulberry32: deterministic float stream in [0, 1) from a string seed.
 
 export function cyrb128(str: string): [number, number, number, number] {
   let h1 = 1779033703;
@@ -44,7 +37,7 @@ export function mulberry32(a: number): () => number {
   };
 }
 
-/** Build a generator from a seed string (the canonical entry point). */
+/** canonical entry point */
 export function rngFromSeed(seedStr: string): () => number {
   const [a] = cyrb128(seedStr);
   return mulberry32(a);

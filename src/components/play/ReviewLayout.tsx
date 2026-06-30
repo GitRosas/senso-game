@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 
-/** Shared target-vs-guess layout reused by every game's Review and the result screen. */
+// Shared target-vs-guess layout used by every game's Review component.
 export function ReviewLayout({
   targetNode,
   guessNode,

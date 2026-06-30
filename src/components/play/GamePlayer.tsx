@@ -50,7 +50,7 @@ export function GamePlayer({
   );
 
   const start = useCallback(() => {
-    // The tap is a user gesture — unlock audio for Pitch here.
+    // Tap is a user gesture, so unlock audio for Pitch here.
     if (gameId === 'pitch') getAudioContext();
     setTarget(genTarget(round));
     setPhase('study');
@@ -78,7 +78,7 @@ export function GamePlayer({
     setPhase('ready');
   }, [game.rounds, round]);
 
-  // After the final round's review, glide straight to the results — no button needed.
+  // Auto-advance to results after the last round's review so no button tap is needed.
   const isLastRound = round >= game.rounds - 1;
   useEffect(() => {
     if (phase !== 'review' || !isLastRound) return;

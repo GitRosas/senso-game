@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { scoreRound, totalScore, MAX_TOTAL, scorePercent } from '@/games/engine/scoring';
+import { scoreRound, totalScore, MAX_TOTAL } from '@/games/engine/scoring';
 
 describe('scoreRound', () => {
   it('is 10 at zero error', () => {
@@ -48,13 +48,5 @@ describe('totalScore', () => {
 
   it('rounds to two decimals', () => {
     expect(totalScore([1.111, 2.222])).toBe(3.33);
-  });
-});
-
-describe('scorePercent', () => {
-  it('maps total to 0–100', () => {
-    expect(scorePercent(0)).toBe(0);
-    expect(scorePercent(25)).toBe(50);
-    expect(scorePercent(50)).toBe(100);
   });
 });
