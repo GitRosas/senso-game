@@ -147,7 +147,7 @@ export function ResultScreen({
                 onChange={(e) => setName(e.target.value)}
                 placeholder={t('namePlaceholder')}
                 maxLength={24}
-                className="h-11 w-full rounded-md border border-border bg-bg px-3 outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="h-11 w-full rounded-md border border-border bg-bg px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-accent"
               />
             </label>
             <Button onClick={onSubmit} disabled={submitting}>
@@ -188,19 +188,14 @@ export function ResultScreen({
         <h2 className="mb-3 text-sm uppercase tracking-widest text-muted">{t('perRound')}</h2>
         <ol className="space-y-3">
           {outcomes.map((o) => (
-            <li
-              key={o.roundIndex}
-              className="flex items-center gap-4 rounded-lg border border-border bg-surface p-3"
-            >
-              <span className="w-6 shrink-0 text-center text-sm font-bold text-muted">
-                {o.roundIndex + 1}
-              </span>
-              <div className="flex-1">
-                <Review target={o.target} guess={o.guess} mode={mode} compact />
+            <li key={o.roundIndex} className="rounded-lg border border-border bg-surface p-3">
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-sm font-bold text-muted">
+                  {t('round', { n: o.roundIndex + 1 })}
+                </span>
+                <span className="tabular text-lg font-bold text-accent">{o.score.toFixed(1)}</span>
               </div>
-              <span className="tabular w-16 shrink-0 text-right text-lg font-bold text-accent">
-                {o.score.toFixed(1)}
-              </span>
+              <Review target={o.target} guess={o.guess} mode={mode} compact />
             </li>
           ))}
         </ol>

@@ -3,12 +3,10 @@ import { test, expect, type Page } from '@playwright/test';
 async function holdTempo(page: Page, ms = 450) {
   const hold = page.getByTestId('tempo-hold');
   await hold.waitFor({ state: 'visible', timeout: 12_000 });
-  const box = await hold.boundingBox();
-  if (!box) throw new Error('no hold target');
-  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-  await page.mouse.down();
+  // Pointer events work identically on desktop and mobile emulation.
+  await hold.dispatchEvent('pointerdown');
   await page.waitForTimeout(ms);
-  await page.mouse.up();
+  await hold.dispatchEvent('pointerup');
 }
 
 async function playTempo(page: Page) {

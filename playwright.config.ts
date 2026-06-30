@@ -31,6 +31,10 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    {
+      name: 'mobile',
+      use: { ...devices['Pixel 5'] },
+    },
   ],
   webServer: {
     // Default to the production server (`next start`) — it doesn't rewrite `.next`

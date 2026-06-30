@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
@@ -16,6 +16,13 @@ import '../globals.css';
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#0b0e14',
+};
 
 export async function generateMetadata({
   params: { locale },
@@ -69,7 +76,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${inter.variable} ${mono.variable}`}>
-      <body className="font-sans antialiased">
+      <body className="overflow-x-hidden font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
           <ToastProvider>
             <a

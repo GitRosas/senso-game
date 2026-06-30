@@ -116,6 +116,24 @@ body::before {
   touch-action: none;
 }
 
+/* Snappier taps and no double-tap zoom on controls (mobile). */
+button,
+[role='button'],
+a {
+  touch-action: manipulation;
+}
+
+/* Respect device safe areas (notch / home indicator) for fixed UI. */
+.safe-top {
+  padding-top: max(0.75rem, env(safe-area-inset-top));
+}
+.safe-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+.safe-mb {
+  margin-bottom: env(safe-area-inset-bottom);
+}
+
 /* Long-form SEO content typography. */
 .prose-senso {
   max-width: 70ch;

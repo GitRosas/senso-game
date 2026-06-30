@@ -104,9 +104,12 @@ export function GamePlayer({
   }
 
   return (
-    <div style={accentStyle} className="fixed inset-0 z-50 flex flex-col bg-bg">
+    <div
+      style={accentStyle}
+      className="safe-bottom fixed inset-0 z-50 flex flex-col overflow-hidden overscroll-none bg-bg"
+    >
       {/* Top bar */}
-      <div className="flex items-center justify-between px-4 py-3">
+      <div className="safe-top flex items-center justify-between px-4 pb-3">
         <Link
           href={`/play/${gameId}`}
           className="rounded-md px-3 py-2 text-sm text-muted hover:text-fg"

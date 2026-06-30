@@ -132,7 +132,7 @@ export function AccountClient() {
             value={emailInput}
             onChange={(e) => setEmailInput(e.target.value)}
             placeholder={t('emailPlaceholder')}
-            className="h-11 w-full rounded-md border border-border bg-bg px-3 outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="h-11 w-full rounded-md border border-border bg-bg px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-accent"
           />
           <Button className="w-full" onClick={signInEmail} disabled={!emailInput}>
             {t('sendLink')}
@@ -233,7 +233,7 @@ export function AccountClient() {
                 <input
                   value={roomName}
                   onChange={(e) => setRoomName(e.target.value)}
-                  className="h-10 rounded-md border border-border bg-bg px-3 outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="h-10 rounded-md border border-border bg-bg px-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 />
               </label>
               <label className="text-sm">

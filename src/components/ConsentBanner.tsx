@@ -25,7 +25,7 @@ export function ConsentBanner() {
     <div
       role="dialog"
       aria-label={t('title')}
-      className="fixed inset-x-3 bottom-3 z-[55] mx-auto max-w-2xl rounded-lg border border-border bg-surface/95 p-4 shadow-2xl backdrop-blur animate-slide-up"
+      className="safe-mb fixed inset-x-3 bottom-3 z-40 mx-auto max-w-2xl rounded-lg border border-border bg-surface/95 p-4 shadow-2xl backdrop-blur animate-slide-up"
     >
       <p className="mb-3 text-sm text-muted">
         <strong className="text-fg">{t('title')}.</strong> {t('message')}{' '}

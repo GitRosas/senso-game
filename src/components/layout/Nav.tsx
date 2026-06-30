@@ -60,21 +60,20 @@ export function Nav() {
           ))}
         </div>
 
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="flex items-center gap-2">
           <LocaleSwitcher />
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border md:hidden"
+            aria-expanded={open}
+            aria-label={open ? t('closeMenu') : t('openMenu')}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span aria-hidden className="text-xl">
+              {open ? '✕' : '☰'}
+            </span>
+          </button>
         </div>
-
-        <button
-          type="button"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-border md:hidden"
-          aria-expanded={open}
-          aria-label={open ? t('closeMenu') : t('openMenu')}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span aria-hidden className="text-xl">
-            {open ? '✕' : '☰'}
-          </span>
-        </button>
       </nav>
 
       {open && (
@@ -93,9 +92,6 @@ export function Nav() {
                 {l.label}
               </Link>
             ))}
-            <div className="px-3 py-2">
-              <LocaleSwitcher />
-            </div>
           </div>
         </div>
       )}

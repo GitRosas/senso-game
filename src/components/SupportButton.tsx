@@ -11,7 +11,7 @@ export async function SupportButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t('support')}
-      className="fixed bottom-4 left-4 z-40 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-border bg-surface/90 px-4 py-2 text-sm font-medium shadow-lg backdrop-blur transition hover:bg-surface-2"
+      className="safe-mb fixed bottom-4 left-4 z-40 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-border bg-surface/90 px-4 py-2 text-sm font-medium shadow-lg backdrop-blur transition hover:bg-surface-2"
     >
       <span aria-hidden>☕</span>
       <span>{t('support')}</span>
