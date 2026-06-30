@@ -6,7 +6,7 @@ import { GAME_ORDER, isGameId } from '@/games/engine/registry';
 import { GAME_ACCENTS, GAME_GLYPHS } from '@/config';
 import { Leaderboard } from '@/components/Leaderboard';
 import { AdSlot } from '@/components/AdSlot';
-import { hexToRgbChannels } from '@/lib/utils';
+import { cn, hexToRgbChannels } from '@/lib/utils';
 
 export function generateStaticParams() {
   return (['en', 'pt'] as const).flatMap((locale) =>
@@ -52,12 +52,32 @@ export default async function LeaderboardPage({
       style={{ ['--accent' as string]: hexToRgbChannels(accent) }}
       className="mx-auto max-w-3xl px-4 py-10"
     >
-      <header className="mb-6 flex items-center gap-3">
+      <header className="mb-4 flex items-center gap-3">
         <span className="text-3xl" aria-hidden>
           {GAME_GLYPHS[game]}
         </span>
         <h1 className="text-2xl font-bold">{tl('title', { game: gameName })}</h1>
       </header>
+
+      {/* Switch between each game's leaderboard without leaving the page. */}
+      <nav className="mb-6 -mx-1 flex gap-2 overflow-x-auto px-1 pb-1" aria-label={tl('hubTitle')}>
+        {GAME_ORDER.map((id) => (
+          <Link
+            key={id}
+            href={`/leaderboard/${id}`}
+            aria-current={id === game}
+            className={cn(
+              'inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition',
+              id === game
+                ? 'border-accent bg-accent/10 text-fg'
+                : 'border-border text-muted hover:bg-surface-2 hover:text-fg',
+            )}
+          >
+            <span aria-hidden>{GAME_GLYPHS[id]}</span>
+            {tg(`${id}.name`)}
+          </Link>
+        ))}
+      </nav>
 
       <Leaderboard gameId={game} />
 

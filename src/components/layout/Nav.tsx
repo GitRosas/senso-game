@@ -26,7 +26,7 @@ export function Nav() {
 
   const links: Array<{ href: string; label: string }> = [
     { href: '/', label: t('games') },
-    { href: '/leaderboard/tempo', label: t('leaderboard') },
+    { href: '/leaderboard', label: t('leaderboard') },
     { href: '/pricing', label: t('pricing') },
   ];
   if (FEATURES.supabase) {

@@ -202,6 +202,8 @@
   },
   "Leaderboard": {
     "title": "Classificação de {game}",
+    "hubTitle": "Classificações",
+    "hubSubtitle": "Escolhe um jogo para veres a classificação.",
     "daily": "Diário",
     "allTime": "Sempre",
     "easy": "Fácil",
